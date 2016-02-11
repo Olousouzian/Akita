@@ -16,15 +16,26 @@ class AkitaCrawlCommand extends ContainerAwareCommand
     {
         $this
             ->setName('akita:crawl')
-            ->setDescription('Crawl the specified page')            
+            ->setDescription('Crawl the specified Facebook page')
+            ->addArgument(
+                'Facebook pageId',
+                InputArgument::REQUIRED,
+                'What page ?'
+            )     
+            ->addArgument(
+                'Limit number',
+                InputArgument::OPTIONAL,
+                'How many ?'
+            )          
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+       $limit = intval($input->getArgument('Limit number'));       
        $accessToken = $this->getContainer()->getParameter('akita_access_tools');
        $ww = new WorkerWrapper($accessToken);
        $ww->isConnected();
-       $output->writeln($ww->DoWork("lorealprofessionnel")["Data"]);
+       $output->writeln($ww->DoWork($input->getArgument('Facebook pageId'), $limit)["Data"]);
     }      
 }

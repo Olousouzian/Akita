@@ -32,19 +32,55 @@ final class WorkerWrapper
         return array("isConnected" => true, "Text" => "<info>Your configuration is OK ! Akita is now connected with Facebook.</info>");        
     }
     
-    public function DoWork($tag){
-         
+    
+    public function getAttachments($jsonObject, $tag, $limit){
+             
         try {
-            $response = $this->fb->get("/$tag/posts");
+            $response = $this->fb->get("/$tag/posts?limit=$limit&fields=attachments");
         } catch(Facebook\Exceptions\FacebookResponseException $e) {
             return array("Success" => false, 
             "Data" => "<error>Somethings failed : " .  $e->getMessage() . "</error>");
         } catch(Facebook\Exceptions\FacebookSDKException $e) {
             return array("Success" => false, 
                 "Data" => "<error>Somethings failed : " .  $e->getMessage() . "</error>");
-        }        
+        } 
+       $graphEdge = $response->getGraphEdge();
+       
+       foreach ($graphEdge as $key => $graphNode) {   	        
+           $jsonObject[$key]->attachments = json_decode($graphNode->asJson());
+       }
+       return json_encode($jsonObject);
+    }
+    
+    
+    public function DoWork($tag, $limit){
+         
+        $limit = $limit == 0 ? 100 : $limit;
+        try {
+            $response = $this->fb->get("/$tag/posts?limit=$limit");
+        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+            return array("Success" => false, 
+            "Data" => "<error>Somethings failed : " .  $e->getMessage() . "</error>");
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+            return array("Success" => false, 
+                "Data" => "<error>Somethings failed : " .  $e->getMessage() . "</error>");
+        } 
+       $graphEdge = $response->getGraphEdge();
+       
+       $str = "[";
+       foreach ($graphEdge as $key => $graphNode) {
+           
+           if ($key > 0){
+               $str.= ',';
+           }
+           $str .= $graphNode->asJson();           
+       }
+       $str .= "]";
+       
+       $data = $this->getAttachments(json_decode($str), $tag, $limit);    
+       
         return array("Success" => true, 
-            "Data" => json_encode($response->getBody()));
+            "Data" => $data);
     }
     
 }
