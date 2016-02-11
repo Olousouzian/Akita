@@ -10,12 +10,12 @@ final class WorkerWrapper
     private $fb = null;
     private $helper = null;
     
-    function __construct(){
+    function __construct($accessToken){
         $this->fb = new Facebook\Facebook([
             'app_id' => 'AKITA!',
             'app_secret' => 'AKITA!',
             'default_graph_version' => 'v2.5',
-            'default_access_token' => '314035505454417|sCd0QARTYExto1__nhCr8fr0odg'
+            'default_access_token' => $accessToken
         ]);
         $this->helper = $this->fb->getRedirectLoginHelper();
         $this->helper = $this->fb->getJavaScriptHelper();
