@@ -1,0 +1,30 @@
+{
+    "name" : "olousouzian/akitabundle",
+    "description" : "Symfony 2.X bundle for easy crawling Facebook page",
+    "type" : "symfony-bundle",
+    "authors" : [{
+	"name" : "Fabien Olousouzian",
+	"email" : "olousouzian.fabien@gmail.com"
+    }],
+    "keywords" : [
+	"akita bundle crawler facebook easy symfony"
+    ],
+    "license" : [
+	"MIT"
+    ],
+    "require" : {
+    },
+    "autoload" : {
+	"psr-0" : {
+	    "Olousouzian\\AkitaBundle" : ""
+	}
+    },
+    "target-dir" : "Olousouzian/AkitaBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+	"branch-alias" : {
+	    "dev-master" : "some_version-dev"
+	}
+    }
+}
