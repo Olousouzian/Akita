@@ -1,0 +1,3 @@
+olousouzian_akita_homepage:
+    path:     /
+    defaults: { _controller: OlousouzianAkitaBundle:Default:index }
