@@ -15,7 +15,7 @@ class AkitaCrawlCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('akita:crawl')
+            ->setName('akita:crawler')
             ->setDescription('Crawl the specified Facebook page')
             ->addArgument(
                 'Facebook pageId',
@@ -26,16 +26,22 @@ class AkitaCrawlCommand extends ContainerAwareCommand
                 'Limit number',
                 InputArgument::OPTIONAL,
                 'How many ?'
-            )          
+            )      
+            ->addArgument(
+                'Timestamp',
+                InputArgument::OPTIONAL,
+                'When ?'
+            )       
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
        $limit = intval($input->getArgument('Limit number'));       
+       $timestamp = intval($input->getArgument('Timestamp'));       
        $accessToken = $this->getContainer()->getParameter('akita_access_tools');
        $ww = new WorkerWrapper($accessToken);
        $ww->isConnected();
-       $output->writeln($ww->DoWork($input->getArgument('Facebook pageId'), $limit)["Data"]);
+       $output->writeln($ww->DoWork($input->getArgument('Facebook pageId'), $limit, $timestamp)["Data"]);
     }      
 }

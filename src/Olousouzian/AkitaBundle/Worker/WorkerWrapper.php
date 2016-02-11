@@ -33,7 +33,7 @@ final class WorkerWrapper
     }
     
     
-    public function getAttachments($jsonObject, $tag, $limit){
+    public function getAttachments($jsonObject, $tag, $limit, $timestamp){
              
         try {
             $response = $this->fb->get("/$tag/posts?limit=$limit&fields=attachments");
@@ -47,13 +47,28 @@ final class WorkerWrapper
        $graphEdge = $response->getGraphEdge();
        
        foreach ($graphEdge as $key => $graphNode) {   	        
-           $jsonObject[$key]->attachments = json_decode($graphNode->asJson());
+         
+           	$obj = json_decode($graphNode->asJson());   
+            $id = $obj->id;  
+            
+            $found = false;
+            foreach ($jsonObject as $jObj) {
+                
+                if ($jObj->id == $id){                    
+                    $found = true;
+                    break;
+                }                
+            }
+            
+            if ($found == true){
+                $jsonObject[$key]->attachments = json_decode($graphNode->asJson());
+            }
        }
        return json_encode($jsonObject);
     }
     
-    
-    public function DoWork($tag, $limit){
+    // TODO : Need Refacto
+    public function DoWork($tag, $limit, $timestamp){
          
         $limit = $limit == 0 ? 100 : $limit;
         try {
@@ -70,14 +85,20 @@ final class WorkerWrapper
        $str = "[";
        foreach ($graphEdge as $key => $graphNode) {
            
+           $date = json_decode($graphNode->asJson());   
+           $datePost = strtotime($date->created_time);          
+           if ($datePost <= $timestamp){
+               continue;
+           }
+           
            if ($key > 0){
                $str.= ',';
            }
            $str .= $graphNode->asJson();           
        }
        $str .= "]";
-       
-       $data = $this->getAttachments(json_decode($str), $tag, $limit);    
+
+       $data = $this->getAttachments(json_decode($str), $tag, $limit, $timestamp);    
        
         return array("Success" => true, 
             "Data" => $data);
