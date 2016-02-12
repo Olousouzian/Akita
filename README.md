@@ -50,8 +50,15 @@ Enter your Facebook token.
 This bundle works only by CLI (Command Line Interface).
 Two commands are avalaibles : 
 
--  app/console akita:check --> Only check if your installation seems to be ok
--  app/console akita:crawl [facebookPageId] [Limit] [Timestamp] --> Launch the crawler
+```sh
+app/console akita:check
+```
+Only check if your installation seems to be ok
+
+```sh
+app/console akita:crawl [facebookPageId] [Limit] [Timestamp]
+```
+Launch the crawler
 
 ## License
 
