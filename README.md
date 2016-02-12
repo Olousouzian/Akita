@@ -21,14 +21,6 @@ Install it with Composer
 composer require olousouzian/akitabundle
 ```
 
-Launch an update with :
-
-```sh
-$ composer update
-```
-
-And put your access token.
-
 
 Finally, register the bundle into app/AppKernel : 
 
@@ -36,7 +28,21 @@ Finally, register the bundle into app/AppKernel :
 new Olousouzian\AkitaBundle\OlousouzianAkitaBundle(),
 ```
 
+## Parameters
 
+Edit /app/config/parameters.yml.dist and add the following variable :
+
+```sh
+akita_access_token
+```
+
+Save the change and launch 
+
+```sh
+$ composer update
+```
+
+Enter your Facebook token.
 
 
 ## License
