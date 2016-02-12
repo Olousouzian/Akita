@@ -1,4 +1,0 @@
-olousouzian_akita:
-    resource: "@OlousouzianAkitaBundle/Resources/config/routing.yml"
-    prefix:   /
-
