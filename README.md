@@ -45,6 +45,14 @@ $ composer update
 Enter your Facebook token.
 
 
+## How to use
+
+This bundle works only by CLI (Command Line Interface).
+Two commands are avalaibles : 
+
+-  app/console akita:check --> Only check if your installation seems to be ok
+-  app/console akita:crawl [facebookPageId] [Limit] [Timestamp] --> Launch the crawler
+
 ## License
 
 This solution is under MIT license.
