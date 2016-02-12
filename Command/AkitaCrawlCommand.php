@@ -39,7 +39,7 @@ class AkitaCrawlCommand extends ContainerAwareCommand
     {
        $limit = intval($input->getArgument('Limit number'));       
        $timestamp = intval($input->getArgument('Timestamp'));       
-       $accessToken = $this->getContainer()->getParameter('akita_access_tools');
+       $accessToken = $this->getContainer()->getParameter('akita_access_token');
        $ww = new WorkerWrapper($accessToken);
        $ww->isConnected();
        $output->writeln($ww->DoWork($input->getArgument('Facebook pageId'), $limit, $timestamp)["Data"]);

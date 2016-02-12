@@ -22,7 +22,7 @@ class AkitaCheckCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-       $accessToken = $this->getContainer()->getParameter('akita_access_tools');       
+       $accessToken = $this->getContainer()->getParameter('akita_access_token');       
        $ww = new WorkerWrapper($accessToken);
         $output->writeln($ww->isConnected()["Text"]);
     }      
