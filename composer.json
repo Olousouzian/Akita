@@ -13,6 +13,7 @@
 	"MIT"
     ],
     "require" : {
+	"facebook/php-sdk-v4": "dev-master"
     },
     "autoload" : {
 	"psr-0" : {
