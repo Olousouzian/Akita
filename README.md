@@ -18,7 +18,7 @@ and save your token. We need this on the next step.
 Install it with Composer 
 
 ```sh
-$ Comming soon...
+composer require olousouzian/akitabundle
 ```
 
 Launch an update with :
